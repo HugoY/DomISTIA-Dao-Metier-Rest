@@ -69,7 +69,6 @@ class Commandes {
     public function setMap($map) {
         $this->map = $map;
     }
-
 }
 
 ?>
