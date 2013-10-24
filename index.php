@@ -1,12 +1,12 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title></title>
-    </head>
-    <body>
-        <?php
-        // put your code here
-        ?>
-    </body>
-</html>
+<?php
+// ip : 192.168.2.1
+// port : 100
+// chaine renvoyer par Arduino {"id":"192.168.2.3","desc":"duemilanove","mac":"90:A2:DA:00:1D:A7","port":102}
+require_once 'dao/Recorder.php';
+$adress = "172.20.82.103";
+$port = 20009;
+ini_set("max_execution_time",0);
+$serveur  = new Recorder();
+$serveur->init($adress, $port);
+$serveur->run();
+?>
