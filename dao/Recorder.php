@@ -39,10 +39,13 @@ class Recorder implements IThreadDao {
 
   public function run() {
     echo "run\n";
-    //while(true){
+    while(true){
     $this->client = socket_accept($this->socket); //Le code se bloque jusqu'à ce qu'une nouvelle connexion cliente soit établie
     $this->recordArduino();
-    //}
+    sleep(5);
+    socket_close($this->client); // et non pas $this-> socket
+    echo "socket_close:client\n";
+    }
   }
 
   private function recordArduino() {
