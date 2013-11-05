@@ -8,7 +8,8 @@ $port = 10000;
 ini_set("max_execution_time",0);
 $serveur  = new Recorder();
 $serveur->init($adress, $port);
-$serveur->run();
+//$serveur->run();
+$serveur->start();
 
 echo "Je m'affiche alors que run est dans une boucle infinie";
 ?>

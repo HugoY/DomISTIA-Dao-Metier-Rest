@@ -12,7 +12,7 @@ public void setDao(IDao dao);
  *
  * @author usrlocal
  */
-interface IThreadDao {
+interface IThreadDao extends Thread {
   public function setDao($dao);
 }
 
