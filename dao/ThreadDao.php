@@ -12,8 +12,15 @@ public void setDao(IDao dao);
  *
  * @author usrlocal
  */
-interface IThreadDao extends Thread {
-  public function setDao($dao);
+class ThreadDao extends Thread {
+  public function setDao($dao){
+    
+  }
+  
+  public function run() {
+        /** ... **/
+    }
+   
 }
 
 ?>

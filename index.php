@@ -1,15 +1,16 @@
 <?php
+require_once 'dao/Recorder.php';
+require_once 'dao/Dao.php';
+
 // ip : 192.168.2.1
 // port : 100
-// chaine renvoyer par Arduino {"id":"192.168.2.3","desc":"duemilanove","mac":"90:A2:DA:00:1D:A7","port":102}
-require_once 'dao/Recorder.php';
-$adress = "172.20.82.172";
-$port = 10000;
+// chaine renvoyée par Arduino {"id":"192.168.2.3","desc":"duemilanove","mac":"90:A2:DA:00:1D:A7","port":102}
+
 ini_set("max_execution_time",0);
-$serveur  = new Recorder();
-$serveur->init($adress, $port);
-//$serveur->run();
-$serveur->start();//Will start a new Thread to execute the implemented run method 
+
+$dao = new Dao();
+
+$dao->init();
 
 echo "Je m'affiche alors que run est dans une boucle infinie";
 ?>
