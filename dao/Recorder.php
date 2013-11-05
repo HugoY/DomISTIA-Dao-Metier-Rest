@@ -41,9 +41,7 @@ class Recorder extends ThreadDao {
   private function recordArduino() {
     echo "recordArduino\n";
     $buf = socket_read($this->client, 2048, PHP_BINARY_READ);  // PHP_NORMAL_READ => arduino / PHP_BINARY_READ => pc
-    echo "L'arduino voulant s'enregistrer à envoyer : " . $buf . "\n";
-    $this->dao->
-    
+    echo "L'arduino voulant s'enregistrer à envoyer : " . $buf . "\n";    
   }
 
 }
