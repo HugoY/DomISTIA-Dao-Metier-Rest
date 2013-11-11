@@ -57,12 +57,12 @@ class Dao extends Stackable implements IDao {
   }
 
   public function sendCommandes($idArduino, $commandes) {
-    
+    // Ceci est un test
   }
 
   public function sendCommandesJson($idArduino, $commandes) {
-    
-  }  //put your code here
+    // encore un test
+  }
 }
 
 ?>
