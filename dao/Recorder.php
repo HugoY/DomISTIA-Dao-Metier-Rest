@@ -50,11 +50,11 @@ class Recorder extends ThreadDao {
     echo "\nL'arduino voulant s'enregistrer à envoyer : " . $buf . "\n\n";
     // Parser la chaine 
     $parsedRecordDemand = json_decode($buf);
-    $arduino = new Arduino(0,
+    $arduino = new Arduino($parsedRecordDemand->{'id'},
                            $parsedRecordDemand->{'desc'},
                            $parsedRecordDemand->{'mac'},
-                           $parsedRecordDemand->{'id'},
-                           $parsedRecordDemand->{'port'});// Pour instant id toujours égal à 0
+                           "Une ip",
+                           $parsedRecordDemand->{'port'});
     $this->dao->addArduino($arduino);
     //$this->dao->echoArduinos();
     var_dump($this->dao->getArduinos());
