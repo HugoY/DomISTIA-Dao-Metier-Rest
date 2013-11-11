@@ -26,7 +26,7 @@ class Recorder extends ThreadDao {
   }
 
   public function init($address, $port) {
-        
+    $this->ip=$address; 
     echo "init\n";
     $this->socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
     socket_bind($this->socket, $address, $port) or die($this->destroy(null)); //on lie la ressource sur laquelle le serveur va écouter
@@ -53,7 +53,7 @@ class Recorder extends ThreadDao {
     $arduino = new Arduino($parsedRecordDemand->{'id'},
                            $parsedRecordDemand->{'desc'},
                            $parsedRecordDemand->{'mac'},
-                           "Une ip",
+                           $this->ip, // Pas sur
                            $parsedRecordDemand->{'port'});
     $this->dao->addArduino($arduino);
     //$this->dao->echoArduinos();
