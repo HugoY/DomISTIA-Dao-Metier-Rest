@@ -2,6 +2,7 @@
 
 require_once 'ThreadDao.php';
 require_once 'entities/Arduino.php'; // util ?
+
 // To Do : Création de Thread, implémenter IThreadDao
 
 /**
@@ -57,7 +58,8 @@ class Recorder extends ThreadDao {
                            $parsedRecordDemand->{'port'});
     $this->dao->addArduino($arduino);
     //$this->dao->echoArduinos();
-    var_dump($this->dao->getArduinos());
+   //var_dump($this->dao->getArduinos());
+    // Socket close ? 
   }
 
 }

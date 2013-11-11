@@ -34,7 +34,7 @@ class Commandes {
     }
 
     public function toJSON(){
-        $map = array("id" => $id, "ac" => $ac, "pa" => $pa);
+        $map = array("id" => $this->id, "ac" => $this->action, "pa" => $this->parametres);
         return json_encode($map);
     }
     

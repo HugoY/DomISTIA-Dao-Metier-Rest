@@ -22,7 +22,7 @@ class SharedArray extends Stackable {
 class Dao extends Stackable implements IDao {
 
     // dictionnaire des arduinos
-    public $lesArduinos;
+    private $lesArduinos;
     private $serveurEnregistrement;
 
     public function __construct($recorder) {
@@ -43,7 +43,7 @@ class Dao extends Stackable implements IDao {
     }
 
     public function addArduino($arduino) {
-        $this->lesArduinos[] = $arduino;
+        $this->lesArduinos[$arduino->getId()] = $arduino;
         //var_dump($this->lesArduinos);
     }
 
@@ -55,7 +55,7 @@ class Dao extends Stackable implements IDao {
     }
 
     public function getArduinos() {
-        return $this->lesArduinos;
+        return (array) $this->lesArduinos;
     }
 
     public function removeArduino($arduino) {
@@ -69,11 +69,11 @@ class Dao extends Stackable implements IDao {
         //Creation de la socket
         $sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP) or die('Création de socket refusée');
         //Connexion au serveur
-        socket_connect($sock, $arduino->ip, $arduino->port) or die('Connexion impossible');
+        socket_connect($sock, $arduino->getIp(), /*$arduino->port*/10001) or die('Connexion impossible');
         //Ecriture du paquet vers le serveur
         socket_write($sock, $commandes->toJSON(), 500);// 500 ?
         // Attendre une réponse 
-        $input = socket_read($client, 500);
+        $input = socket_read($sock, 500);
         echo $input;
         //Fermeture de la connexion
         socket_close($sock);
