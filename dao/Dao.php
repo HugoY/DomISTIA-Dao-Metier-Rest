@@ -49,7 +49,7 @@ class Dao extends Stackable implements IDao {
   }
   
   public function getArduinos() {
-      
+      return $this->lesArduinos;
   }
 
   public function removeArduino($arduino) {

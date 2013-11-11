@@ -56,7 +56,8 @@ class Recorder extends ThreadDao {
                            $parsedRecordDemand->{'id'},
                            $parsedRecordDemand->{'port'});// Pour instant id toujours égal à 0
     $this->dao->addArduino($arduino);
-    $this->dao->echoArduinos();
+    //$this->dao->echoArduinos();
+    var_dump($this->dao->getArduinos());
   }
 
 }
