@@ -57,7 +57,7 @@ class Dao extends Stackable implements IDao {
   }
 
   public function sendCommandes($idArduino, $commandes) {
-    // Ceci est un test
+    $arduino = $this->lesArduinos[$idArduino];
   }
 
   public function sendCommandesJson($idArduino, $commandes) {
