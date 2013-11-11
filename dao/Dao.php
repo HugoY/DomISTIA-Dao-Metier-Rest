@@ -5,26 +5,51 @@ require_once 'IDao.php';
  *
  * @author usrlocal
  */
-class Dao implements IDao {
+
+class SharedArray extends Stackable {
+    public function __construct($array) {
+        $this->merge($array);
+    }
+
+    public function run(){}
+}
+
+class Dao extends Stackable implements IDao {
+ 
+  // dictionnaire des arduinos
+    public $lesArduinos;
+    private $serveurEnregistrement;
   
-  private $serveur;
-  
-  public function init(){
-    $adress = "172.20.82.172";
-    $port = 10000;
-    $this->serveur  = new Recorder();
-    $this->serveur->setDao($this);
-    $this->serveur->init($adress, $port);
-    //$serveur->run();
-    $this->serveur->start();//Will start a new Thread to execute the implemented run method 
+  public function __construct($recorder){
+      $this->serveurEnregistrement = $recorder;
+      $this->lesArduinos = new SharedArray(array());
   }
+    
+  public function init(){
+    $adress = "192.168.0.16"; //172.20.82.172
+    $port = 10000;
+
+    $this->serveurEnregistrement->setDao($this);
+    $this->serveurEnregistrement->init($adress, $port);
+
+  }
+  
+  public function run(){}
   
   public function addArduino($arduino) {
-    
+    $this->lesArduinos[]=$arduino;
+    //var_dump($this->lesArduinos);
   }
 
+  public function echoArduinos(){
+   echo "Liste des arduinos enregistrées pour le moment : \n";
+   foreach ($this->lesArduinos as $a) {
+        echo $a->toString()."\n";
+    }
+  }
+  
   public function getArduinos() {
-    
+      
   }
 
   public function removeArduino($arduino) {

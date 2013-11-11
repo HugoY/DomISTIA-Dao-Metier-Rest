@@ -8,9 +8,13 @@ require_once 'dao/Dao.php';
 
 ini_set("max_execution_time",0);
 
-$dao = new Dao();
+
+$recordeur  = new Recorder();
+$dao = new Dao($recordeur);
 
 $dao->init();
+//$this->serveur->run();
+$recordeur->start();//Will start a new Thread to execute the implemented run method 
 
-echo "Je m'affiche alors que run est dans une boucle infinie";
+echo "Je m'affiche alors que run est dans une boucle infinie\n";
 ?>

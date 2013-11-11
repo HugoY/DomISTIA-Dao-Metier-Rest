@@ -12,8 +12,16 @@ class Arduino {
   private $ip; // str
   private $port; // int
   
+  public function __construct($id, $description, $mac, $ip, $port) {
+      $this->setId($id);
+      $this->setDescription($description);
+      $this->setMac($mac);
+      $this->setIp($ip);
+      $this->setPort($port);
+  }
+  
   public function toString() {
-    return "id=".$id.", description=[%s]".$description.", mac=[%s]".$mac.", ip=[%s]".$ip.", port=".port;
+    return "id=".$this->id.", description=".$this->description.", mac=".$this->mac.", ip=".$this->ip.", port=".$this->port;
   }
   
   public function getId() {
