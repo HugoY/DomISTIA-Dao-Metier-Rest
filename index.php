@@ -28,6 +28,6 @@ foreach ( $arduinos as $a) {
  
  $reponse=$metier->pinRead("1", "1", "13", "b");
   
-
+ var_dump($reponse);
 
 ?>

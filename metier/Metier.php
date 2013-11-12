@@ -8,7 +8,7 @@ require_once 'IMetier.php';
 require_once 'dao/Recorder.php';
 require_once 'dao/DaoSimulation.php';
 require_once 'entities/Arduino.php';
-
+require_once 'entities/Commande.php';
 
 class Metier implements IMetier{
     
@@ -25,7 +25,7 @@ class Metier implements IMetier{
 
 
     public function faireClignoterLed($idCommande, $idArduino, $pin, $millis, $nbIter) {
-        $commande = new Commandes();
+        $commande = new Commande();
         $parametres = array(
             "nb" => $nbIter,
             "dur" => $millis, 
@@ -43,7 +43,7 @@ class Metier implements IMetier{
     }
 
     public function pinRead($idCommande, $idArduino, $pin, $mode) {
-        $commande = new Commandes();
+        $commande = new Commande();
         $parametres = array(
             "pin" => $pin,
             "mod" => $mode, 
@@ -57,7 +57,7 @@ class Metier implements IMetier{
     }
 
     public function pinWrite($idCommande, $idArduino, $pin, $mode, $val) {
-        $commande = new Commandes();
+        $commande = new Commande();
         $parametres = array(
             "pin" => $pin,
             "mod" => $mode,

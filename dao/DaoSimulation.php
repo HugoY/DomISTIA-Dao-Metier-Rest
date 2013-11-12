@@ -1,7 +1,7 @@
 <?php
 require_once 'entities/Arduino.php';
-require_once 'entities/Reponses.php';
-require_once 'entities/Commandes.php';
+require_once 'entities/Reponse.php';
+require_once 'entities/Commande.php';
 require_once 'IDao.php';
 
 /*
@@ -33,9 +33,10 @@ class DaoSimulation implements IDao{
 
     public function sendCommandes($idArduino, $commandes) {
         
-        $reponse= new Reponses();
+        $reponse= new Reponse();
+         var_dump($commandes);
         
-        $reponse->initWithJSON($json);
+        $reponse->initWithJSON("{\"id\":\"1\",\"er\":\"100\",\"et\":{}}");
         return $reponse;
         
     }
