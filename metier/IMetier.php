@@ -25,9 +25,18 @@ public List<Reponse> sendCommandes(String idArduino, List<Commande> commandes);
 }
  */
 interface IMetier {
-    //put your code here
+    // liste des arduinos    
     public function getArduino();
+    //lecture pin
     public function pinRead($idCommande, $idArduino,$pin,$mode);
+    //ecriture pin
+    public function pinWrite($idCommande, $idArduino,$pin,$mode,$val);
+    //faire clignoter une led
+    public function faireClignoterLed($idCommande, $idArduino,$pin,$millis,$nbIter);
+    // envoyer une suite de commandes Json à un Arduino
+    public function sendCommandesJson($idArduino, $commandes);
+    // envoyer une suite de commandes à un Arduino
+    public function sendCommandes($idArduino, $commandes);
 
 
 }
