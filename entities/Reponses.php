@@ -61,6 +61,8 @@ class Reponses {
         $this->setErreur($map["er"]);
         $this->setEtat($map["et"]);
     }
+    
+    
 
 }
 

@@ -1,6 +1,6 @@
 <?php
-require_once 'dao/Recorder.php';
-require_once 'dao/Dao.php';
+require_once 'metier/Metier.php';
+//require_once 'dao/Dao.php';
 
 // ip : 192.168.2.1
 // port : 100
@@ -8,7 +8,7 @@ require_once 'dao/Dao.php';
 
 ini_set("max_execution_time",0);
 
-
+/*
 $recordeur  = new Recorder();
 $dao = new Dao($recordeur);
 
@@ -16,5 +16,18 @@ $dao->init();
 //$this->serveur->run();
 $recordeur->start();//Will start a new Thread to execute the implemented run method 
 
-echo "Je m'affiche alors que run est dans une boucle infinie\n";
+echo "Je m'affiche alors que run est dans une boucle infinie\n";*/
+
+$metier= new Metier();
+
+$arduinos=$metier->getArduinos();
+echo "J'ai ajouté l'arduino : ";
+foreach ( $arduinos as $a) {
+        echo $a->toString()."\n";
+    }
+ 
+ $reponse=$metier->pinRead("1", "1", "13", "b");
+  
+
+
 ?>
