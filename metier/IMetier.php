@@ -26,7 +26,7 @@ public List<Reponse> sendCommandes(String idArduino, List<Commande> commandes);
  */
 interface IMetier {
     // liste des arduinos    
-    public function getArduino();
+    public function getArduinos();
     //lecture pin
     public function pinRead($idCommande, $idArduino,$pin,$mode);
     //ecriture pin
