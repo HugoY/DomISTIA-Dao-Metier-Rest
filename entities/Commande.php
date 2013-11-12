@@ -5,7 +5,7 @@
  *
  * @author usrlocal
  */
-class Commandes {
+class Commande {
 
     private $id;
     private $action;

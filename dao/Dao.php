@@ -1,6 +1,7 @@
 <?php
 
 require_once 'IDao.php';
+require_once 'entities/Reponse.php';
 
 /**
  * Description of Dao
@@ -75,7 +76,7 @@ class Dao extends Stackable implements IDao {
         }
         echo "Socket created \n";
         //Connexion au serveur
-            
+
         if (!socket_connect($sock, $arduino->getIp(), $arduino->getPort())) {
             $errorcode = socket_last_error();
             $errormsg = socket_strerror($errorcode);
@@ -92,16 +93,18 @@ class Dao extends Stackable implements IDao {
         }
         echo "Message write successfully \n";
         // Attendre une réponse 
-        if (!$input = socket_read($sock, 2048, PHP_NORMAL_READ)){
+        if (!$input = socket_read($sock, 2048, PHP_NORMAL_READ)) {
             $errorcode = socket_last_error();
             $errormsg = socket_strerror($errorcode);
 
             die("Could not read: [$errorcode] $errormsg \n");
         }
         echo "La réponse : " . $input;
-        
         //Fermeture de la connexion
         socket_close($sock);
+        $reponse = new Reponse();
+        $reponse->initWithJSON($input);
+        return $reponse;
     }
 
     public function sendCommandesJson($idArduino, $commandes) {

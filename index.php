@@ -2,7 +2,7 @@
 
 require_once 'dao/Recorder.php';
 require_once 'dao/Dao.php';
-require_once 'entities/Commandes.php';
+require_once 'entities/Commande.php';
 
 // ip : 192.168.2.1
 // port : 100
@@ -24,7 +24,7 @@ while (true) {
     sleep(1);
     if (count($dao->getArduinos()) != 0) {
         echo "Une arduino c'est enregistré, on lui envoi un message\n";
-        $commandes = new Commandes();
+        $commandes = new Commande();
         $commandes->initWithIdActionParametres("1", "cl", array("pin"=>"9", "dur"=>"100", "nb"=>"10"));
         echo "La commande envoyée est : \n";
         var_dump($commandes->toJSON());
@@ -33,7 +33,8 @@ while (true) {
         $temp = array_values($tableauArduinos);
         $arduino = array_shift($temp);
         //var_dump($arduino);
-        $dao->sendCommandes($arduino->getId(), $commandes);
+        $rep = $dao->sendCommandes($arduino->getId(), $commandes);
+        var_dump($rep);
         break;
     }
 }
