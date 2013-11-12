@@ -1,6 +1,7 @@
 <?php
 
 require_once 'IDao.php';
+require_once 'entities/Arduino.php';
 require_once 'entities/Reponse.php';
 
 /**
