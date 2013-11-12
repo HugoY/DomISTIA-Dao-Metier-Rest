@@ -6,19 +6,21 @@
  */
 require_once 'IMetier.php';
 require_once 'dao/Recorder.php';
-require_once 'dao/Dao.php';
+require_once 'dao/DaoSimulation.php';
+require_once 'entities/Arduino.php';
 
 
 class Metier implements IMetier{
     
     private $dao;
     
-    function _construct(){
-        $recordeur  = new Recorder();
-        $this->dao = new Dao($recordeur);
-
-        $this->dao->init();
-        $recordeur->start();//Will start a new Thread to execute the implemented run method                 
+    public function __construct(){
+    
+        $this->dao = new DaoSimulation();
+        $arduino=new Arduino("1","uno","AZE:ZEER","192.168.2.3","102");
+        $this->dao->addArduino($arduino);
+       
+      
     }
 
 
@@ -29,7 +31,7 @@ class Metier implements IMetier{
             "dur" => $millis, 
             "pin" => $pin,
         );
-        $commande->initWithIdActionParametres($idCommande, "pr", $parametres);
+        $commande->initWithIdActionParametres($idCommande, "cl", $parametres);
         //on ajoute dans un tableau
         
         $this->sendCommandes($idArduino, array($commande));
@@ -37,7 +39,7 @@ class Metier implements IMetier{
     }
 
     public function getArduinos() {
-        $this->dao->getArduinos();                        
+       return $this->dao->getArduinos();                        
     }
 
     public function pinRead($idCommande, $idArduino, $pin, $mode) {
