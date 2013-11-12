@@ -13,8 +13,6 @@ require_once 'entities/Arduino.php'; // util ?
  */
 class Recorder extends ThreadDao {
 
-
- // private $arduinos = array();
   private $dao;
   private $socket = null; //La socket "maître" sur laquelle le serveur écoute
   private $client = null; //Contiendra l'id de chaque nouvelle connexion
@@ -47,7 +45,7 @@ class Recorder extends ThreadDao {
 
   private function recordArduino() {
     echo "recordArduino\n";
-    $buf = socket_read($this->client, 2048, PHP_BINARY_READ);  // PHP_NORMAL_READ => arduino / PHP_BINARY_READ => pc
+    $buf = socket_read($this->client, 2048, PHP_NORMAL_READ);  // PHP_NORMAL_READ => arduino / PHP_BINARY_READ => pc
     echo "\nL'arduino voulant s'enregistrer à envoyer : " . $buf . "\n\n";
     // Parser la chaine 
     $parsedRecordDemand = json_decode($buf);

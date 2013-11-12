@@ -31,8 +31,8 @@ class Dao extends Stackable implements IDao {
     }
 
     public function init() {
-        $adress = "192.168.0.16"; //172.20.82.172
-        $port = 10000;
+        $adress = "192.168.2.1"; //172.20.82.172
+        $port = 100;
 
         $this->serveurEnregistrement->setDao($this);
         $this->serveurEnregistrement->init($adress, $port);
@@ -69,7 +69,7 @@ class Dao extends Stackable implements IDao {
         //Creation de la socket
         $sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP) or die('Création de socket refusée');
         //Connexion au serveur
-        socket_connect($sock, $arduino->getIp(), /*$arduino->port*/10001) or die('Connexion impossible');
+        socket_connect($sock, $arduino->getIp(), /*$arduino->port*/102) or die('Connexion impossible');
         //Ecriture du paquet vers le serveur
         socket_write($sock, $commandes->toJSON(), 500);// 500 ?
         // Attendre une réponse 
