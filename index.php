@@ -25,7 +25,9 @@ while (true) {
     if (count($dao->getArduinos()) != 0) {
         echo "Une arduino c'est enregistré, on lui envoi un message\n";
         $commandes = new Commandes();
-        $commandes->initWithIdActionParametres("idTest", "actionTest", "parametreTest");
+        $commandes->initWithIdActionParametres("1", "cl", array("pin"=>"9", "dur"=>"100", "nb"=>"10"));
+        echo "La commande envoyée est : \n";
+        var_dump($commandes->toJSON());
         //var_dump($dao->getArduinos());
         $tableauArduinos = $dao->getArduinos();
         $temp = array_values($tableauArduinos);

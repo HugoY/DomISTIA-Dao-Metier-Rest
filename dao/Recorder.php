@@ -52,7 +52,7 @@ class Recorder extends ThreadDao {
     $arduino = new Arduino($parsedRecordDemand->{'id'},
                            $parsedRecordDemand->{'desc'},
                            $parsedRecordDemand->{'mac'},
-                           $this->ip, // Pas sur
+                           $parsedRecordDemand->{'id'},
                            $parsedRecordDemand->{'port'});
     $this->dao->addArduino($arduino);
     //$this->dao->echoArduinos();
