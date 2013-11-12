@@ -26,8 +26,8 @@ class Dao extends Stackable implements IDao {
   }
     
   public function init(){
-    $adress = "192.168.0.16"; //172.20.82.172
-    $port = 10000;
+    $adress = "192.168.2.1"; //172.20.82.172
+    $port = 100;
 
     $this->serveurEnregistrement->setDao($this);
     $this->serveurEnregistrement->init($adress, $port);
