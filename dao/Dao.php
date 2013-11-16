@@ -23,7 +23,6 @@ class SharedArray extends Stackable {
 
 class Dao extends Stackable implements IDao {
 
-    // dictionnaire des arduinos
     private $lesArduinos;
     private $serveurEnregistrement;
 
@@ -63,71 +62,67 @@ class Dao extends Stackable implements IDao {
         unset($this->lesArduinos[$idArduino]);
     }
 
-    public function sendCommandes($idArduino, $commande) {
-        echo "SendCommandes\n";
-        // Ici on est un client qui envoi $commandes (converti en json) sur l'arduino défini par $idArduino
-
-        $arduino = $this->lesArduinos[$idArduino];
-        //Creation de la socket
+    protected function socketCreate() {
         if (!$sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP)) {
             $errorcode = socket_last_error();
             $errormsg = socket_strerror($errorcode);
-
-            die("Couldn't create socket: [$errorcode] $errormsg \n");
+            throw new DomotiqueException("Impossible de créer socket: [$errorcode] $errormsg \n");
         }
         echo "Socket created \n";
-        //Connexion au serveur
+        return $sock;
+    }
 
-        if (!socket_connect($sock, $arduino->getIp(), $arduino->getPort())) {
+    protected function socketConnectToArduino($sock, $arduinoIp, $arduinoPort) {
+        if (!socket_connect($sock, $arduinoIp, $arduinoPort)) {
             $errorcode = socket_last_error();
             $errormsg = socket_strerror($errorcode);
-
-            die("Could not connect: [$errorcode] $errormsg \n");
+            throw new DomotiqueException("Could not connect: [$errorcode] $errormsg \n");
         }
         echo "Connection established \n";
+    }
+
+    protected function socketReadAnswerFromArduino($sock) {
+        if (!$buf = socket_read($sock, 2048, PHP_NORMAL_READ)) {
+            $errorcode = socket_last_error();
+            $errormsg = socket_strerror($errorcode);
+            throw new DomotiqueException("Could not read: [$errorcode] $errormsg \n");
+        }
+        echo "La réponse : " . $buf . "\n";
+        return $buf;
+    }
+
+    public function sendCommandes($idArduino, $commande) {
+        // Ici on est un client qui envoi $commandes (converti en json) sur l'arduino défini par $idArduino
+        echo "SendCommandes\n";
+        $arduino = $this->lesArduinos[$idArduino];
+        //Creation de la socket
+        $sock = $this->socketCreate();
+        //Connexion au serveur
+        $this->socketConnectToArduino($sock, $arduino->getIp(), $arduino->getPort());
         //Ecriture du paquet vers le serveur
         if (!socket_write($sock, $commande->toJSON(), 2048)) {
             $errorcode = socket_last_error();
             $errormsg = socket_strerror($errorcode);
-
-            die("Could not write: [$errorcode] $errormsg \n");
+            throw new DomainException("Could not write: [$errorcode] $errormsg \n");
         }
         echo "Message write successfully \n";
         // Attendre une réponse 
-        if (!$buf = socket_read($sock, 2048, PHP_NORMAL_READ)) {
-            $errorcode = socket_last_error();
-            $errormsg = socket_strerror($errorcode);
-
-            die("Could not read: [$errorcode] $errormsg \n");
-        }
-        echo "La réponse : " . $buf."\n";
+        $answer = $this->socketReadAnswerFromArduino($sock);
         //Fermeture de la connexion
         socket_close($sock);
         $reponse = new Reponse();
-        $reponse->initWithJSON($buf);
+        $reponse->initWithJSON($answer);
         return $reponse;
     }
 
     public function sendCommandesJson($idArduino, $commandeJson) {
         echo "SendCommandesJson\n";
         $arduino = $this->lesArduinos[$idArduino];
-
-        if (!$sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP)) {
-            $errorcode = socket_last_error();
-            $errormsg = socket_strerror($errorcode);
-
-            die("Couldn't create socket: [$errorcode] $errormsg \n");
-        }
-        echo "Socket created \n";
-
-        if (!socket_connect($sock, $arduino->getIp(), $arduino->getPort())) {
-            $errorcode = socket_last_error();
-            $errormsg = socket_strerror($errorcode);
-
-            die("Could not connect: [$errorcode] $errormsg \n");
-        }
-        echo "Connection established \n";
-        
+        //Creation de la socket
+        $sock = $this->socketCreate();
+        //Connexion au serveur
+        $this->socketConnectToArduino($sock, $arduino->getIp(), $arduino->getPort());
+        //Ecriture du paquet vers le serveur
         if (!socket_write($sock, $commandeJson, 2048)) {
             $errorcode = socket_last_error();
             $errormsg = socket_strerror($errorcode);
@@ -135,15 +130,10 @@ class Dao extends Stackable implements IDao {
             die("Could not write: [$errorcode] $errormsg \n");
         }
         echo "Message write successfully \n";
-
-        if (!$buf = socket_read($sock, 2048, PHP_NORMAL_READ)) {
-            $errorcode = socket_last_error();
-            $errormsg = socket_strerror($errorcode);
-
-            die("Could not read: [$errorcode] $errormsg \n");
-        }
-        echo "La réponse : " . $buf."\n";
-        socket_close($sock);
+        // Attendre une réponse 
+        $answer = $this->socketReadAnswerFromArduino($sock);
+        //Fermeture de la connexion
+        socket_close($answer);
         return $buf;
     }
 

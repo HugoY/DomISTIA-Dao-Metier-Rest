@@ -2,6 +2,7 @@
 
 require_once 'ThreadDao.php';
 require_once 'entities/Arduino.php';
+require_once 'entities/DomotiqueException.php';
 
 /**
  * Description of Recorder : 
@@ -23,22 +24,47 @@ class Recorder extends ThreadDao {
 
     public function init($address, $port) {
         echo "init\n";
-        $this->socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-        socket_bind($this->socket, $address, $port) or die($this->destroy(null)); //on lie la ressource sur laquelle le serveur va écouter
-        socket_listen($this->socket); //On prépare l'écoute
+        if (!$this->socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP)) {
+            $errorcode = socket_last_error();
+            $errormsg = socket_strerror($errorcode);
+            throw new DomotiqueException("Impossible de créer socket: [$errorcode] $errormsg \n");
+        }
+        //on lie la ressource sur laquelle le serveur va écouter
+        if (!socket_bind($this->socket, $address, $port)) {
+            $errorcode = socket_last_error();
+            $errormsg = socket_strerror($errorcode);
+            throw new DomotiqueException("Impossible de binder la socket: [$errorcode] $errormsg \n");
+        }
+        //On prépare l'écoute
+        if (!socket_listen($this->socket)) {
+            $errorcode = socket_last_error();
+            $errormsg = socket_strerror($errorcode);
+            throw new DomotiqueException("Impossible de listen la socket: [$errorcode] $errormsg \n");
+        }
     }
 
     public function run() {
         echo "run\n";
         while (true) {
-            $this->client = socket_accept($this->socket); //Le code se bloque jusqu'à ce qu'une nouvelle connexion cliente soit établie
+            //Le code se bloque jusqu'à ce qu'une nouvelle connexion cliente soit établie
+            if (!$this->client = socket_accept($this->socket)) {
+                $errorcode = socket_last_error();
+                $errormsg = socket_strerror($errorcode);
+                throw new DomotiqueException("Erreur avec socket_accept: [$errorcode] $errormsg \n");
+            }
             $this->recordArduino();
         }
     }
 
     private function recordArduino() {
         echo "recordArduino\n";
-        $buf = socket_read($this->client, 2048, PHP_NORMAL_READ);  // PHP_NORMAL_READ => arduino / PHP_BINARY_READ => pc
+        // PHP_NORMAL_READ => arduino / PHP_BINARY_READ => pc
+        if (!$buf = socket_read($this->client, 2048, PHP_NORMAL_READ)) {
+            $errorcode = socket_last_error();
+            $errormsg = socket_strerror($errorcode);
+            throw new DomotiqueException("Could not read: [$errorcode] $errormsg \n");
+        }
+
         echo "\nL'arduino voulant s'enregistrer à envoyer : " . $buf . "\n\n";
         $parsedRecordDemand = json_decode($buf);
         $arduino = new Arduino($parsedRecordDemand->{'id'}, $parsedRecordDemand->{'desc'}, $parsedRecordDemand->{'mac'}, $parsedRecordDemand->{'id'}, $parsedRecordDemand->{'port'});

@@ -11,13 +11,17 @@ require_once 'entities/Commande.php';
 ini_set("max_execution_time", 0);
 
 
-$recordeur = new Recorder();
-$dao = new Dao($recordeur);
 
-$dao->init();
+
+try {
+    $recordeur = new Recorder();
+    $dao = new Dao($recordeur);
+    $dao->init();
 //$this->serveur->run();
-$recordeur->start(); //Will start a new Thread to execute the implemented run method 
-
+    $recordeur->start(); //Will start a new Thread to execute the implemented run method 
+} catch (DomotiqueException $e) {
+    echo "DomotiqueException " . $e->getMessage();
+}
 echo "Je m'affiche alors que run est dans une boucle infinie\n";
 
 while (true) {
@@ -25,7 +29,7 @@ while (true) {
     if (count($dao->getArduinos()) != 0) {
         echo "Une arduino c'est enregistré, on lui envoi un message\n";
         $commandes = new Commande();
-        $commandes->initWithIdActionParametres("1", "cl", array("pin"=>"9", "dur"=>"100", "nb"=>"10"));
+        $commandes->initWithIdActionParametres("1", "cl", array("pin" => "9", "dur" => "100", "nb" => "10"));
         echo "La commande envoyée est : \n";
         var_dump($commandes->toJSON());
         //var_dump($dao->getArduinos());
@@ -33,8 +37,12 @@ while (true) {
         $temp = array_values($tableauArduinos);
         $arduino = array_shift($temp);
         //var_dump($arduino);
-        $rep = $dao->sendCommandes($arduino->getId(), $commandes);
-        var_dump($rep);
+        try {
+            $rep = $dao->sendCommandes($arduino->getId(), $commandes);
+            var_dump($rep);
+        } catch (DomotiqueException $e) {
+            echo "DomotiqueException " . $e->getMessage();
+        }
         break;
     }
 }
