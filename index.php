@@ -8,26 +8,17 @@ require_once 'metier/Metier.php';
 
 ini_set("max_execution_time", 0);
 
-/*
-$recordeur  = new Recorder();
-$dao = new Dao($recordeur);
 
-$dao->init();
-//$this->serveur->run();
-$recordeur->start(); //Will start a new Thread to execute the implemented run method 
-
-echo "Je m'affiche alors que run est dans une boucle infinie\n";*/
 
 $metier= new Metier();
-
+while(count($metier->getArduinos())==0);
 $arduinos=$metier->getArduinos();
-echo "J'ai ajouté l'arduino : ";
-foreach ( $arduinos as $a) {
-        echo $a->toString()."\n";
-    }
- 
- $reponse=$metier->pinRead("1", "1", "13", "b");
-  
- var_dump($reponse);
+
+ while(true){
+$reponse=$metier->pinRead("1", "192.168.2.3", "9", "b"); //{"id":"2","ac":"pw","pa":{"pin":"7","mod":"b","val":"1"}}
+
+var_dump($reponse);
+echo "La réponse : ".$reponse->getJson()."\n";
+ }
 
 ?>

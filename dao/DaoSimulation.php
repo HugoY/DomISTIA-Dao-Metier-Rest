@@ -34,8 +34,11 @@ class DaoSimulation implements IDao{
     public function sendCommandes($idArduino, $commandes) {
         
         $reponse= new Reponse();
-         var_dump($commandes);
-        
+         //var_dump($commandes);
+         foreach ($commandes as $a){
+             echo "la commande : ".$a->toJSON()."\n";
+         }
+                 
         $reponse->initWithJSON("{\"id\":\"1\",\"er\":\"100\",\"et\":{}}");
         return $reponse;
         
