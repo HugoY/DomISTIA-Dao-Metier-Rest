@@ -11,8 +11,6 @@ require_once 'entities/Commande.php';
 ini_set("max_execution_time", 0);
 
 
-
-
 try {
     $recordeur = new Recorder();
     $dao = new Dao($recordeur);
