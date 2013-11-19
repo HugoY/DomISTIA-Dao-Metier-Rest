@@ -1,8 +1,8 @@
 <?php
 
-require_once 'dao/Recorder.php';
-require_once 'dao/Dao.php';
-require_once 'entities/Commande.php';
+require_once '../dao/Recorder.php';
+require_once '../dao/Dao.php';
+require_once '../entities/Commande.php';
 
 // ip : 192.168.2.1
 // port : 100

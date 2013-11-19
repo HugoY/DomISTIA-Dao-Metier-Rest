@@ -1,8 +1,8 @@
 <?php
 
-require_once 'IDao.php';
-require_once 'entities/Arduino.php';
-require_once 'entities/Reponse.php';
+require_once __DIR__ . '\IDao.php';
+require_once __DIR__ . '\..\entities/Arduino.php';
+require_once __DIR__ . '\..\entities/Reponse.php';
 
 /**
  * Description of Dao
@@ -91,7 +91,7 @@ class Dao extends Stackable implements IDao {
         return $buf;
     }
 
-    public function sendCommandes($idArduino, $commande) {
+    protected function sendOneCommande($idArduino, $commande) {
         // Ici on est un client qui envoi $commandes (converti en json) sur l'arduino défini par $idArduino
         echo "SendCommandes\n";
         $arduino = $this->lesArduinos[$idArduino];
@@ -115,7 +115,7 @@ class Dao extends Stackable implements IDao {
         return $reponse;
     }
 
-    public function sendCommandesJson($idArduino, $commandeJson) {
+    protected function sendOneCommandeJson($idArduino, $commandeJson) {
         echo "SendCommandesJson\n";
         $arduino = $this->lesArduinos[$idArduino];
         //Creation de la socket
@@ -137,6 +137,21 @@ class Dao extends Stackable implements IDao {
         return $buf;
     }
 
+    public function sendCommandes($idArduino, $commandes) {
+        $reponses = array();
+        foreach ($commandes as $commande) {
+            $reponses[] = sendOneCommande($idArduino, $commande);
+        }
+        return $reponses;
+    }
+
+    public function sendCommandesJson($idArduino, $commandesJson) {
+        $reponses = array();
+        foreach ($commandesJson as $commandeJson) {
+            $reponses[] = sendOneCommandeJson($idArduino, $commandeJson);
+        }
+        return $reponses;
+    }
 }
 
 ?>

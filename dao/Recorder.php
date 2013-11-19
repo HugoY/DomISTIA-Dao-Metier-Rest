@@ -1,8 +1,8 @@
 <?php
 
-require_once 'ThreadDao.php';
-require_once 'entities/Arduino.php';
-require_once 'entities/DomotiqueException.php';
+require_once __DIR__.'\ThreadDao.php';
+require_once __DIR__.'\..\entities/Arduino.php';
+require_once __DIR__.'\..\entities/DomotiqueException.php';
 
 /**
  * Description of Recorder : 
