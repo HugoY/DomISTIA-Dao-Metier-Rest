@@ -5,11 +5,11 @@
  *
  * @author usrlocal
  */
-class Commandes {
+class Commande {
 
     private $id;
     private $action;
-    private $parametres;
+    private $parametres; // parametre est un tableau!
     private $map; // A quoi sert map ?? 
 
     public function __construct() {
@@ -34,8 +34,8 @@ class Commandes {
     }
 
     public function toJSON(){
-        $map = array("id" => $id, "ac" => $ac, "pa" => $pa);
-        return json_encode($map);
+        $map = array("id" => $this->id, "ac" => $this->action, "pa" => $this->parametres);
+        return json_encode($map)."\n";
     }
     
     public function getId() {
