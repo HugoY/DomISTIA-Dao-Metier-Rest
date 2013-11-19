@@ -133,14 +133,15 @@ class Dao extends Stackable implements IDao {
         // Attendre une réponse 
         $answer = $this->socketReadAnswerFromArduino($sock);
         //Fermeture de la connexion
-        socket_close($answer);
-        return $buf;
+        socket_close($sock);
+        return $answer;
     }
 
     public function sendCommandes($idArduino, $commandes) {
         $reponses = array();
         foreach ($commandes as $commande) {
-            $reponses[] = sendOneCommande($idArduino, $commande);
+            $reponses[] = $this->sendOneCommande($idArduino, $commande);
+           
         }
         return $reponses;
     }
@@ -148,7 +149,7 @@ class Dao extends Stackable implements IDao {
     public function sendCommandesJson($idArduino, $commandesJson) {
         $reponses = array();
         foreach ($commandesJson as $commandeJson) {
-            $reponses[] = sendOneCommandeJson($idArduino, $commandeJson);
+            $reponses[] = $this->sendOneCommandeJson($idArduino, $commandeJson);
         }
         return $reponses;
     }
