@@ -4,8 +4,17 @@ require_once '../../dao/Recorder.php';
 require_once '../../dao/Dao.php';
 
 class DaoTest extends PHPUnit_Framework_TestCase {
+    
+    private $recorder;
+    private $dao;
+   
+    protected function setUp(){
+        $host= gethostname();
+        $ip = gethostbyname($host);
+        
+    }
 
-    public function testInstanciationRecorder() {
+        public function testInstanciationRecorder() {
         $recorder = new Recorder();
         $this->assertClassHasAttribute('dao', 'recorder');
         return $recorder;
