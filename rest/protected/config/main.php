@@ -7,8 +7,6 @@ return array(
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'rules'=>array(
-				/*'post/<id:\d+>/<title:.*?>'=>'post/view',
-				'posts/<tag:.*?>'=>'post/index',*/
 				// REST patterns
 				// route => pattern
 				array('arduino/arduinos', 'pattern'=>'server-restServer/arduinos/', 'verb'=>'GET'),
