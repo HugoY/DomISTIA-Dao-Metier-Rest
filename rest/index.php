@@ -1,7 +1,7 @@
 <?php
 
 // include Yii bootstrap file
-defined('YII_DEBUG') or define('YII_DEBUG',true);
+defined('YII_DEBUG') or define('YII_DEBUG', true);
 require_once(dirname(__FILE__) . '/../framework/yii.php');
 $config = dirname(__FILE__) . '/protected/config/main.php';
 
@@ -16,8 +16,8 @@ $config = dirname(__FILE__) . '/protected/config/main.php';
         exit();
     }
     apc_store('app:couche_metier', $metier);
-}*/
-
+}
+*/
 
 // create a Web application instance and run
 Yii::createWebApplication($config)->run();
