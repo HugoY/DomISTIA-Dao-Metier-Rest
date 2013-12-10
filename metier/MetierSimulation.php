@@ -7,6 +7,7 @@
  */
 require_once 'IMetier.php';
 require_once(dirname(__FILE__) . '/../entities/Arduino.php');
+require_once(dirname(__FILE__) . '/../entities/Reponse.php');
 
 class MetierSimulation implements IMetier {
 
@@ -28,17 +29,33 @@ class MetierSimulation implements IMetier {
     $this->arduinos[$arduino2->getId()] = $arduino2;
   }
 
-  public function faireClignoterLed($idCommande, $idArduino, $pin, $millis, $nbIter) {
-    
-  }
+  
+    public function faireClignoterLed($idCommande, $idArduino, $pin, $millis, $nbIter) {
+      if (!array_key_exists($idArduino,$this->arduinos)){
+        var_dump($this->arduinos);
+        throw new DomotiqueException("L'arduino [".$idArduino."] n'existe pas",103);
+      }
+      
+        
+    }
+
 
   public function getArduinos() {
     return $this->arduinos;
   }
 
-  public function pinRead($idCommande, $idArduino, $pin, $mode) {
-    
-  }
+
+    public function pinRead($idCommande, $idArduino, $pin, $mode) {
+        if (!array_key_exists($idArduino,$this->arduinos)){
+        var_dump($this->arduinos);
+        throw new DomotiqueException("L'arduino [".$idArduino."] n'existe pas",105);
+      }
+      $reponse= new Reponse();
+      $reponse->initWithJson();
+      var_dump($reponse);
+      return $reponse;
+    }
+
 
   public function pinWrite($idCommande, $idArduino, $pin, $mode, $val) {
     
