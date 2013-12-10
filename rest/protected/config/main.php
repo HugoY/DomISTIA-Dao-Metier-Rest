@@ -6,6 +6,7 @@ return array(
 	 'components' => array(
 		'urlManager'=>array(
 			'urlFormat'=>'path',
+      'showScriptName'=>false,
 			'rules'=>array(
 				// REST patterns
 				// route => pattern
