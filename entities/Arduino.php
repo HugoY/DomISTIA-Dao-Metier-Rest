@@ -23,10 +23,10 @@ class Arduino {
   public function toArray(){
       return array(
           "id" => $this->id,
+          "port" => $this->port,
           "description" => $this->description,
           "mac" =>$this->mac,
-          "ip" => $this->ip,
-          "port=" => $this->port
+          "ip" => $this->ip          
       );
   }
 

@@ -10,24 +10,14 @@ class ArduinoController extends CController {
 
     public function actionArduinos() {
         // Couche métier
-        /*if (apc_exists('app:couche_metier') !== false) {
-            $metier = apc_get('app:couche_metier');
-        } else {
-            try {
-                $metier = new Metier();
-            } catch (DomotiqueException $e) {
-                echo"L'erreur suivante s'est produite : " . $e->getMessage();
-                exit();
-            }
-            apc_store('app:couche_metier', $metier);
-        }*/
         $metier = new MetierSimulation();
         //var_dump($metier->getArduinos());
-        $arduinoArray = array(); 
+        $arduinoArray = array();         
         foreach ($metier->getArduinos() as $a){
             $arduinoArray[]=$a->toArray();
         }
-        echo json_encode($arduinoArray);
+        $reponse = ["data" => $arduinoArray];
+        echo json_encode($reponse);
     }
 
     public function actionBlink() {
