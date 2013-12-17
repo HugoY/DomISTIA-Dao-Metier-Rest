@@ -29,10 +29,10 @@ class ArduinoController extends CController {
 
   public function actionBlink() {
         
-        $metier = new MetierSimulation();
+   
         //var_dump($metier->getArduinos());
         try{
-          $metier->faireClignoterLed($_GET['idCommand'] , $_GET['ip'], $_GET['pin'], $_GET['duree'],$_GET['nbIter']);
+          $this->metier->faireClignoterLed($_GET['idCommand'] , $_GET['ip'], $_GET['pin'], $_GET['duree'],$_GET['nbIter']);
           $reponse=array("id"=>$_GET['idCommand'],
                           "erreur"=>"0",
                           "etat"=> array(),
@@ -53,10 +53,10 @@ class ArduinoController extends CController {
     
     public function actionRead() {
         
-        $metier = new MetierSimulation();
+        
         //var_dump($metier->getArduinos());
         try{
-          $reponse=$metier->pinRead($_GET['idCommand'] , $_GET['ip'], $_GET['pin'], $_GET['mode']);
+          $reponse=$this->metier->pinRead($_GET['idCommand'] , $_GET['ip'], $_GET['pin'], $_GET['mode']);
           $reponseArray=array("data"=>$reponse->getJson());
         }catch(Exception $e){
           $reponseArray=array("message"=>$e->getMessage(),
@@ -67,4 +67,5 @@ class ArduinoController extends CController {
         
         echo json_encode($reponseArray);
 
+}
 }
