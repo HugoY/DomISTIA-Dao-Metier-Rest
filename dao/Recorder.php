@@ -15,7 +15,7 @@ class Recorder extends ThreadDao {
     private $client = null; //Contiendra l'id de chaque nouvelle connexion
 
     public function __construct() {
-        
+        echo "<br>Constructeur RECORDER<br>";
     }
 
     public function setDao($dao) {
@@ -44,15 +44,19 @@ class Recorder extends ThreadDao {
     }
 
     public function run() {
-        echo "run\n";
+       
+        
         while (true) {
+            echo "attente client arduino";
             //Le code se bloque jusqu'à ce qu'une nouvelle connexion cliente soit établie
             if (!$this->client = socket_accept($this->socket)) {
                 $errorcode = socket_last_error();
                 $errormsg = socket_strerror($errorcode);
                 throw new DomotiqueException("Erreur avec socket_accept: [$errorcode] $errormsg \n");
-            }
+            }            
             $this->recordArduino();
+            return;
+            //sleep(1);
         }
     }
 
@@ -65,10 +69,12 @@ class Recorder extends ThreadDao {
             throw new DomotiqueException("Could not read: [$errorcode] $errormsg \n");
         }
 
-        echo "\nL'arduino voulant s'enregistrer à envoyer : " . $buf . "\n\n";
+        echo "\nL'arduino voulant s'enregistrer a envoyer : " . $buf . "\n\n";
         $parsedRecordDemand = json_decode($buf);
         $arduino = new Arduino($parsedRecordDemand->{'id'}, $parsedRecordDemand->{'desc'}, $parsedRecordDemand->{'mac'}, $parsedRecordDemand->{'id'}, $parsedRecordDemand->{'port'});
         $this->dao->addArduino($arduino);
+        echo "<br>recordArduino<br>";
+        var_dump($this->dao->getArduinos());
     }
 
 }

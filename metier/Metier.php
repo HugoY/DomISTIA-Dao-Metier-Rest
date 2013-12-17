@@ -5,22 +5,31 @@
  * and open the template in the editor.
  */
 require_once 'IMetier.php';
-require_once 'dao/Recorder.php';
-require_once 'dao/Dao.php';
-require_once 'entities/Arduino.php';
-require_once 'entities/Commande.php';
-require_once 'entities/DomotiqueException.php';
+require_once dirname(__FILE__) . '/../dao/Recorder.php';
+require_once dirname(__FILE__) . '/../dao/Dao.php';
+require_once dirname(__FILE__) . '/../entities/Arduino.php';
+require_once dirname(__FILE__) . '/../entities/Commande.php';
+require_once dirname(__FILE__) . '/../entities/DomotiqueException.php';
 
 class Metier implements IMetier {
+    
+    private static $_instance = null;
+
+  public static function getInstance() {
+    if (is_null(self::$_instance)) {
+      self::$_instance = new Metier();
+    }
+    return self::$_instance;
+  }
 
   private $dao;
 
-  public function __construct() {
+  private function __construct() {
 
-
-    $recordeur = new Recorder();
+      echo "<br>Constructeur METIER<br>";
+    $recordeur = new Recorder(); 
     $this->dao = new Dao($recordeur);
-    $this->dao->init();
+    $this->dao->init();    
     $recordeur->start();
   }
 
@@ -54,6 +63,7 @@ class Metier implements IMetier {
   }
 
   public function getArduinos() {
+    var_dump($this->dao->getArduinos());
     return $this->dao->getArduinos();
   }
 

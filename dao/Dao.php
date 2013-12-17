@@ -27,6 +27,7 @@ class Dao extends Stackable implements IDao {
     private $serveurEnregistrement;
 
     public function __construct($recorder) {
+        echo "<br>Constructeur DAO<br>";
         $this->serveurEnregistrement = $recorder;
         $this->lesArduinos = new SharedArray(array());
     }
