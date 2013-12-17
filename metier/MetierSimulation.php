@@ -51,7 +51,7 @@ class MetierSimulation implements IMetier {
         throw new DomotiqueException("L'arduino [".$idArduino."] n'existe pas",105);
       }
       $reponse= new Reponse();
-      $reponse->initWithJson();
+      $reponse->initWithJson("{\"id\":\"".$idArduino."\",\"er\":\"0\",\"et\":{}}");
       var_dump($reponse);
       return $reponse;
     }
