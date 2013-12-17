@@ -20,6 +20,17 @@ class Arduino {
       $this->setPort($port);
   }
   
+  public function toArray(){
+      return array(
+          "id" => $this->id,
+          "port" => $this->port,
+          "description" => $this->description,
+          "mac" =>$this->mac,
+          "ip" => $this->ip          
+      );
+  }
+
+
   public function toString() {
     return "id=".$this->id.", description=".$this->description.", mac=".$this->mac.", ip=".$this->ip.", port=".$this->port;
   }

@@ -11,7 +11,7 @@ ini_set("max_execution_time", 0);
 
 
 try {
-    $metier = new Metier();
+    $metier =  Metier::getInstance();
 } catch (DomotiqueException $e) {
     echo"L'erreur suivante s'est produite : " . $e->getMessage();
     exit();
@@ -20,7 +20,9 @@ try {
 while (count($metier->getArduinos()) == 0);
 
 $arduinos = $metier->getArduinos();
+echo "Index.php\n";
 var_dump($arduinos);
+/*
 foreach ($arduinos as $a) {
 
 //écriture sur la pin 9 en digital
@@ -106,5 +108,5 @@ foreach ($arduinos as $a) {
     $laCommande="{\"id\":\"2\",\"ac\":\"pw\",\"pa\":{\"pin\":\"7\",\"mod\":\"b\",\"val\":\"1\"}}";
     $metier->sendCommandesJson($a->getId(), array($laCommande));
     
-}
+}*/
 ?>
