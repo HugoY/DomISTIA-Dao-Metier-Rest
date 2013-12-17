@@ -14,3 +14,7 @@ Installation
 * Pthread activé dans PHP
   * http://www.php.net/manual/fr/book.pthreads.php
 * rewrite engine
+
+
+Attention : 
+branche rest => branche avec thread (abandonnée)
