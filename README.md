@@ -16,5 +16,8 @@ Installation
 * rewrite engine
 
 
-Attention : 
-branche rest => branche avec thread (abandonnée)
+Installation pas à pas
+--------
+
+* Installer EasyPhp / Version : DevServer 13.1 VC11
+* 
