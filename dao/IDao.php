@@ -1,9 +1,4 @@
 <?php
-
-/**
- *
- * @author usrlocal
- */
 interface IDao {
 /*
  * // liste des Arduinos
