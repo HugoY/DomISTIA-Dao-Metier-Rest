@@ -5,7 +5,7 @@
  * and open the template in the editor.
  */
 require_once 'IMetier.php';
-require_once dirname(__FILE__) . '/../dao/Recorder.php';
+//require_once dirname(__FILE__) . '/../dao/Recorder.php';
 require_once dirname(__FILE__) . '/../dao/Dao.php';
 require_once dirname(__FILE__) . '/../entities/Arduino.php';
 require_once dirname(__FILE__) . '/../entities/Commande.php';
@@ -27,10 +27,10 @@ class Metier implements IMetier {
   private function __construct() {
 
       echo "<br>Constructeur METIER<br>";
-    $recordeur = new Recorder(); 
-    $this->dao = new Dao($recordeur);
-    $this->dao->init();    
-    $recordeur->start();
+    //$recordeur = new Recorder(); 
+    $this->dao = new Dao();
+   // $this->dao->init();    
+    //$recordeur->start();
   }
 
   public function faireClignoterLed($idCommande, $idArduino, $pin, $millis, $nbIter) {
@@ -63,7 +63,7 @@ class Metier implements IMetier {
   }
 
   public function getArduinos() {
-    var_dump($this->dao->getArduinos());
+    //var_dump($this->dao->getArduinos());
     return $this->dao->getArduinos();
   }
 

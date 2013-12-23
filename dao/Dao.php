@@ -4,49 +4,18 @@ require_once __DIR__ . '\IDao.php';
 require_once __DIR__ . '\..\entities/Arduino.php';
 require_once __DIR__ . '\..\entities/Reponse.php';
 
-/**
- * Description of Dao
- *
- * @author usrlocal
- */
-class SharedArray extends Stackable {
-
-    public function __construct($array) {
-        $this->merge($array);
-    }
-
-    public function run() {
-        
-    }
-
-}
-
-class Dao extends Stackable implements IDao {
+class Dao implements IDao {
 
     private $lesArduinos;
-    private $serveurEnregistrement;
 
-    public function __construct($recorder) {
+    public function __construct() {
         echo "<br>Constructeur DAO<br>";
-        $this->serveurEnregistrement = $recorder;
-        $this->lesArduinos = new SharedArray(array());
+        //  $this->lesArduinos = new SharedArray(array());
     }
 
-    public function init() {
-        $adress = "192.168.2.1"; //172.20.82.172
-        $port = 100;
-
-        $this->serveurEnregistrement->setDao($this);
-        $this->serveurEnregistrement->init($adress, $port);
-    }
-
-    public function run() {
-        
-    }
-
-    public function addArduino($arduino) {
-        $this->lesArduinos[$arduino->getId()] = $arduino;
-    }
+    /* public function addArduino($arduino) {
+      $this->lesArduinos[$arduino->getId()] = $arduino;
+      } */
 
     public function showArduinos() {
         echo "Liste des arduinos enregistrées pour le moment : \n";
@@ -56,7 +25,34 @@ class Dao extends Stackable implements IDao {
     }
 
     public function getArduinos() {
-        return (array) $this->lesArduinos;
+        $address = "192.168.2.1";
+        $port = 100;
+        
+        //Creation de la socket
+        $sock = $this->socketCreate();
+        //Connexion au serveur
+        $this->socketConnectToArduino($sock, $address, $port);
+        //Ecriture du paquet vers le serveur d'enregistrement
+        $mapJSON = json_encode(array("from" => "dao"));
+        $mapJSON .= "\n";
+        if (!socket_write($sock, $mapJSON, 2048)) {
+            $errorcode = socket_last_error();
+            $errormsg = socket_strerror($errorcode);
+            throw new DomainException("Could not write: [$errorcode] $errormsg \n");
+        }
+        echo "Message write successfully \n";
+        // Attendre une réponse 
+        $answer = $this->socketReadAnswerFromArduino($sock);
+        //Fermeture de la connexion
+        socket_close($sock);
+
+        $parsedAnswer = json_decode($answer);
+
+        foreach ($parsedAnswer as $arduinoDecode) {
+            $arduino = new Arduino($arduinoDecode->{'id'}, $arduinoDecode->{'description'}, $arduinoDecode->{'mac'}, $arduinoDecode->{'id'}, $arduinoDecode->{'port'});
+            $this->lesArduinos[$arduino->getId()] = $arduino;
+        }
+        return $this->lesArduinos;
     }
 
     public function removeArduino($idArduino) {
@@ -142,7 +138,6 @@ class Dao extends Stackable implements IDao {
         $reponses = array();
         foreach ($commandes as $commande) {
             $reponses[] = $this->sendOneCommande($idArduino, $commande);
-           
         }
         return $reponses;
     }
@@ -154,6 +149,7 @@ class Dao extends Stackable implements IDao {
         }
         return $reponses;
     }
+
 }
 
 ?>
