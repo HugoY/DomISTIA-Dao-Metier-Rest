@@ -25,12 +25,7 @@ class Metier implements IMetier {
   private $dao;
 
   private function __construct() {
-
-      echo "<br>Constructeur METIER<br>";
-    //$recordeur = new Recorder(); 
     $this->dao = new Dao();
-   // $this->dao->init();    
-    //$recordeur->start();
   }
 
   public function faireClignoterLed($idCommande, $idArduino, $pin, $millis, $nbIter) {
