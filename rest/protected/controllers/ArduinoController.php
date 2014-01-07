@@ -65,14 +65,19 @@ class ArduinoController extends CController {
        
         try{
           $reponse=$this->metier->pinRead($_GET['idCommand'] , $_GET['ip'], $_GET['pin'], $_GET['mode']);
-          $reponseArray=array("data"=>$reponse->getJson());
+          $reponse2= array("id"=>$reponse->getId(),
+                            "erreur"=>$reponse->getErreur(),
+                          "etat"=> $reponse->getEtat(),
+                          "json"=>NULL   
+              );
+          $reponseArray=array("data"=>$reponse2);
         }catch(Exception $e){
           $reponseArray=array("message"=>$e->getMessage(),
                           "erreur"=>$e->getCode()
               
               );
         }
-        
+       
         echo json_encode($reponseArray);
 
 }
@@ -82,7 +87,12 @@ public function actionWrite() {
        
         try{
           $reponse=$this->metier->pinWrite($_GET['idCommand'] , $_GET['ip'], $_GET['pin'], $_GET['mode'],$_GET['valeur']);
-          $reponseArray=array("data"=>$reponse->getJson());
+          $reponse2= array("id"=>$reponse->getId(),
+                            "erreur"=>$reponse->getErreur(),
+                          "etat"=> $reponse->getEtat(),
+                          "json"=>NULL   
+              );
+          $reponseArray=array("data"=>$reponse2);
         }catch(Exception $e){
           $reponseArray=array("message"=>$e->getMessage(),
                           "erreur"=>$e->getCode()

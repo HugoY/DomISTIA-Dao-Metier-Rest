@@ -51,7 +51,7 @@ class MetierSimulation implements IMetier {
         throw new DomotiqueException("L'arduino [".$idArduino."] n'existe pas",105);
       }
       $reponse= new Reponse();
-      $reponse->initWithJson("{\"id\":\"".$idArduino."\",\"er\":\"0\",\"et\":{}}");
+      $reponse->initWithJson('{"id":"'.$idCommande.'","er":"0","et":{"pin0":"1023"}}');
      
       return $reponse;
     }
@@ -63,15 +63,12 @@ class MetierSimulation implements IMetier {
         throw new DomotiqueException("L'arduino [".$idArduino."] n'existe pas",105);
       }
       $reponse= new Reponse();
-      $message = "{\"id\":\"".$idCommande."\",\"er\":\"0\",\"et\":{}}";
-     // echo $message."\n";
-     // $reponse->initWithJson($message);
+      $message = '{"id":"'.$idCommande.'","er":"0","et":{}}';
+    
+      $reponse->initWithJson($message);
+    
       
-      $reponse->setId($idCommande);
-      $reponse->setEtat("{}");
-      $reponse->setErreur("0");
-      
-      var_dump($reponse);
+    
      
       return $reponse;
     
