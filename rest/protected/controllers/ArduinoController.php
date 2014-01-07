@@ -1,7 +1,7 @@
 <?php
 
-require_once(dirname(__FILE__) . '/../../../metier/MetierSimulation.php');
-//require_once(dirname(__FILE__) . '/../../../metier/Metier.php');
+//require_once(dirname(__FILE__) . '/../../../metier/MetierSimulation.php');
+require_once(dirname(__FILE__) . '/../../../metier/Metier.php');
 require_once (dirname(__FILE__) . '/../../../entities/DomotiqueException.php');
 
 class ArduinoController extends CController {
@@ -9,7 +9,7 @@ class ArduinoController extends CController {
   private $metier;
 
   protected function beforeAction($action) {
-    $this->metier = MetierSimulation::getInstance();
+    $this->metier = Metier::getInstance();
     return true;
   }
 

@@ -16,7 +16,7 @@ class Dao implements IDao {
     }
 
     public function getArduinos() {
-        $address = "192.168.2.1";
+        $address = "172.20.82.173";
         $port = 100;
 
         //Creation de la socket
