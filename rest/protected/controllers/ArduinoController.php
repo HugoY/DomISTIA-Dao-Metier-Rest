@@ -22,9 +22,6 @@ class ArduinoController extends CController {
     //sleep(5);
     $arduinoArray = array();
 
-    while (count($this->metier->getArduinos()) == 0) {
-      sleep(1);
-    }
     foreach ($this->metier->getArduinos() as $a) {
       $arduinoArray[] = $a->toArray();
     }
