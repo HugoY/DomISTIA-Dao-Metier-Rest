@@ -32,7 +32,7 @@ class MetierSimulation implements IMetier {
   
     public function faireClignoterLed($idCommande, $idArduino, $pin, $millis, $nbIter) {
       if (!array_key_exists($idArduino,$this->arduinos)){
-        var_dump($this->arduinos);
+      
         throw new DomotiqueException("L'arduino [".$idArduino."] n'existe pas",103);
       }
       
@@ -47,17 +47,33 @@ class MetierSimulation implements IMetier {
 
     public function pinRead($idCommande, $idArduino, $pin, $mode) {
         if (!array_key_exists($idArduino,$this->arduinos)){
-        var_dump($this->arduinos);
+       
         throw new DomotiqueException("L'arduino [".$idArduino."] n'existe pas",105);
       }
       $reponse= new Reponse();
       $reponse->initWithJson("{\"id\":\"".$idArduino."\",\"er\":\"0\",\"et\":{}}");
-      var_dump($reponse);
+     
       return $reponse;
     }
 
 
   public function pinWrite($idCommande, $idArduino, $pin, $mode, $val) {
+    if (!array_key_exists($idArduino,$this->arduinos)){
+       
+        throw new DomotiqueException("L'arduino [".$idArduino."] n'existe pas",105);
+      }
+      $reponse= new Reponse();
+      $message = "{\"id\":\"".$idCommande."\",\"er\":\"0\",\"et\":{}}";
+     // echo $message."\n";
+     // $reponse->initWithJson($message);
+      
+      $reponse->setId($idCommande);
+      $reponse->setEtat("{}");
+      $reponse->setErreur("0");
+      
+      var_dump($reponse);
+     
+      return $reponse;
     
   }
 
