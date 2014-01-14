@@ -1,5 +1,5 @@
 <?php
-
+header("Access-Control-Allow-Origin: *"); // Pour que ça fonctionne avec les appel ajax (goupe voisin deumié)
 //require_once(dirname(__FILE__) . '/../../../metier/MetierSimulation.php');
 require_once(dirname(__FILE__) . '/../../../metier/Metier.php');
 require_once (dirname(__FILE__) . '/../../../entities/DomotiqueException.php');
@@ -8,7 +8,7 @@ class ArduinoController extends CController {
 
   private $metier;
 
-  protected function beforeAction($action) {
+  protected function beforeAction($action) {    
     $this->metier = Metier::getInstance();
     return true;
   }
@@ -39,12 +39,12 @@ class ArduinoController extends CController {
       $this->metier->faireClignoterLed($_GET['idCommand'], $_GET['ip'], $_GET['pin'], $_GET['duree'], $_GET['nbIter']);
       $reponse = array("id" => $_GET['idCommand'],
           "erreur" => "0",
-          "etat" => array(),
+          "etat" => "{}",
           "json" => NULL
       );
       $reponseArray = array("data" => $reponse);
-    } catch (Exception $e) {
-      $reponseArray = array("message" => $e->getMessage(),
+    } catch (DomotiqueException $e) {
+      $reponseArray = array("message" => utf8_encode($e->getMessage()),
           "erreur" => $e->getCode()
       );
     }
@@ -64,7 +64,7 @@ class ArduinoController extends CController {
       );
       $reponseArray = array("data" => $reponse2);
     } catch (Exception $e) {
-      $reponseArray = array("message" => $e->getMessage(),
+      $reponseArray = array("message" => utf8_encode($e->getMessage()),
           "erreur" => $e->getCode()
       );
     }
