@@ -17,7 +17,7 @@ class Dao implements IDao {
   }
 
   public function getArduinos() {
-    $address = "172.20.82.164";
+    $address = "172.20.82.174";
     $port = 100;
     
     //Creation de la socket
@@ -41,7 +41,7 @@ class Dao implements IDao {
     $parsedAnswer = json_decode($answer);
 
     foreach ($parsedAnswer as $arduinoDecode) {
-      $arduino = new Arduino($arduinoDecode->{'id'}, $arduinoDecode->{'description'}, $arduinoDecode->{'mac'}, $arduinoDecode->{'id'}, $arduinoDecode->{'port'});
+      $arduino = new Arduino($arduinoDecode->{'id'}, $arduinoDecode->{'description'}, $arduinoDecode->{'mac'}, $arduinoDecode->{'ip'}, $arduinoDecode->{'port'});
       $this->lesArduinos[$arduino->getId()] = $arduino;
     }
     return $this->lesArduinos;

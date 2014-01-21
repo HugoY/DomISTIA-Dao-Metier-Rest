@@ -93,4 +93,24 @@ class ArduinoController extends CController {
     echo json_encode($reponseArray);
   }
 
+  public function actionCommande() {
+    
+    $commande = file_get_contents('php://input');
+    try {
+      $reponse = $this->metier->sendCommandesJson($_GET['ip'], $commande);
+      $reponse2 = array("id" => $reponse->getId(),
+          "erreur" => $reponse->getErreur(),
+          "etat" => $reponse->getEtat(),
+          "json" => NULL
+      );
+      $reponseArray = array("data" => $reponse2);
+    } catch (Exception $e) {
+      $reponseArray = array("message" => $e->getMessage(),
+          "erreur" => $e->getCode()
+      );
+    }
+
+    echo json_encode($reponseArray);    
+    
+  }
 }

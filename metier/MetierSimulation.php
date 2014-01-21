@@ -79,6 +79,17 @@ class MetierSimulation implements IMetier {
   }
 
   public function sendCommandesJson($idArduino, $commandes) {
+    if (!array_key_exists($idArduino,$this->arduinos)){
+       
+        throw new DomotiqueException("L'arduino [".$idArduino."] n'existe pas",105);
+      }
+      $reponse= new Reponse();
+      $message = '{"id":"1","er":"0","et":{}}';
+    
+      $reponse->initWithJson($message);
+    
+     
+      return $reponse;
     
   }
 

@@ -1,12 +1,13 @@
-#RewriteEngine on
+Options +FollowSymlinks -SymlinksIfOwnerMatch
+RewriteEngine on
 
 # if a directory or a file exists, use it directly
 # Définit une condition qui devra être satisfaite pour que la réécriture soit effectuée 
-#RewriteCond %{REQUEST_FILENAME} !-f
-#RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 
  #chemin de base
-#RewriteBase /server-restServer
+RewriteBase /server-restServer
 
 # otherwise forward it to index.php
-#RewriteRule . index.php
+RewriteRule . index.php
