@@ -34,7 +34,6 @@ class ArduinoController extends CController {
     while (count($this->metier->getArduinos()) == 0) {
       sleep(1);
     }
-    //var_dump($metier->getArduinos());
     try {
       $this->metier->faireClignoterLed($_GET['idCommand'], $_GET['ip'], $_GET['pin'], $_GET['duree'], $_GET['nbIter']);
       $reponse = array("id" => $_GET['idCommand'],
@@ -53,8 +52,6 @@ class ArduinoController extends CController {
   }
 
   public function actionRead() {
-
-
     try {
       $reponse = $this->metier->pinRead($_GET['idCommand'], $_GET['ip'], $_GET['pin'], $_GET['mode']);
       $reponse2 = array("id" => $reponse->getId(),
@@ -73,9 +70,6 @@ class ArduinoController extends CController {
   }
 
   public function actionWrite() {
-
-
-
     try {
       $reponse = $this->metier->pinWrite($_GET['idCommand'], $_GET['ip'], $_GET['pin'], $_GET['mode'], $_GET['valeur']);
       $reponse2 = array("id" => $reponse->getId(),
@@ -85,7 +79,7 @@ class ArduinoController extends CController {
       );
       $reponseArray = array("data" => $reponse2);
     } catch (Exception $e) {
-      $reponseArray = array("message" => $e->getMessage(),
+      $reponseArray = array("message" => utf8_encode($e->getMessage()),
           "erreur" => $e->getCode()
       );
     }

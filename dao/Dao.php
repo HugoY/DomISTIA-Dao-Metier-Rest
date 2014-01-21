@@ -17,7 +17,7 @@ class Dao implements IDao {
   }
 
   public function getArduinos() {
-    $address = "172.20.82.164";
+    $address = getHostByName(getHostName());
     $port = 100;
     
     //Creation de la socket
@@ -41,15 +41,15 @@ class Dao implements IDao {
     $parsedAnswer = json_decode($answer);
 
     foreach ($parsedAnswer as $arduinoDecode) {
-      $arduino = new Arduino($arduinoDecode->{'id'}, $arduinoDecode->{'description'}, $arduinoDecode->{'mac'}, $arduinoDecode->{'id'}, $arduinoDecode->{'port'});
+      $arduino = new Arduino($arduinoDecode->{'id'}, $arduinoDecode->{'description'}, $arduinoDecode->{'mac'}, $arduinoDecode->{'ip'}, $arduinoDecode->{'port'});
       $this->lesArduinos[$arduino->getId()] = $arduino;
     }
     return $this->lesArduinos;
   }
 
-  public function removeArduino($idArduino) {
+  /*public function removeArduino($idArduino) {
     unset($this->lesArduinos[$idArduino]);
-  }
+  }*/
 
   protected function socketCreate() {
     if (!$sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP)) {
@@ -92,7 +92,7 @@ class Dao implements IDao {
     if (!socket_write($sock, $commande->toJSON(), 2048)) {
       $errorcode = socket_last_error();
       $errormsg = socket_strerror($errorcode);
-      throw new DomainException("Could not write: $errormsg \n",$errorcode);
+      throw new DomotiqueException("Could not write: $errormsg \n",$errorcode);
     }
     $this->log->logInfo("Message write successfully \n");
     // Attendre une réponse 
@@ -116,7 +116,7 @@ class Dao implements IDao {
       $errorcode = socket_last_error();
       $errormsg = socket_strerror($errorcode);
 
-      throw new DomainException("Could not write: $errormsg \n",$errorcode);
+      throw new DomotiqueException("Could not write: $errormsg \n",$errorcode);
     }
     $this->log->logInfo("Message write successfully");
     // Attendre une réponse 
