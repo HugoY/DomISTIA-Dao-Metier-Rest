@@ -18,8 +18,6 @@ class ArduinoController extends CController {
   }
 
   public function actionArduinos() {
-    // Couche métier
-    //sleep(5);
     $arduinoArray = array();
 
     foreach ($this->metier->getArduinos() as $a) {

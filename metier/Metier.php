@@ -18,18 +18,21 @@ class Metier implements IMetier {
   public static function getInstance() {
     if (is_null(self::$_instance)) {
       self::$_instance = new Metier();
-    }
+    }    
     return self::$_instance;
   }
 
   private $dao;
+  private $lesArduinos;
 
   private function __construct() {
     $this->dao = new Dao();
+    // Charger la liste des arduinos dans la couche DAO
+    $lesArduinos = $this->getArduinos();
   }
 
   public function faireClignoterLed($idCommande, $idArduino, $pin, $millis, $nbIter) {
-    if (!array_key_exists($idArduino,$this->getArduinos())){
+    if (!array_key_exists($idArduino,$lesArduinos)){
         throw new DomotiqueException("L'arduino [".$idArduino."] n'existe pas",103);
       }
     //on regarde la valeur de la pin
@@ -58,12 +61,11 @@ class Metier implements IMetier {
   }
 
   public function getArduinos() {
-    //var_dump($this->dao->getArduinos());
     return $this->dao->getArduinos();
   }
 
   public function pinRead($idCommande, $idArduino, $pin, $mode) {
-    if (!array_key_exists($idArduino,$this->getArduinos())){
+    if (!array_key_exists($idArduino,$lesArduinos)){
         throw new DomotiqueException("L'arduino [".$idArduino."] n'existe pas",103);
       }
     //On regarde que le mode correspond à a ou b
@@ -96,7 +98,7 @@ class Metier implements IMetier {
   }
 
   public function pinWrite($idCommande, $idArduino, $pin, $mode, $val) {
-    if (!array_key_exists($idArduino,$this->getArduinos())){
+    if (!array_key_exists($idArduino,$lesArduinos)){
         throw new DomotiqueException("L'arduino [".$idArduino."] n'existe pas",103);
       }
     //On regarde que le mode correspond à a ou b
@@ -133,19 +135,17 @@ class Metier implements IMetier {
   }
 
   public function sendCommandes($idArduino, $commandes) {
-    if (!array_key_exists($idArduino,$this->getArduinos())){
+    if (!array_key_exists($idArduino,$lesArduinos)){
         throw new DomotiqueException("L'arduino [".$idArduino."] n'existe pas",103);
       }
     return $this->dao->sendCommandes($idArduino, $commandes);
   }
 
   public function sendCommandesJson($idArduino, $commandes) {
-    if (!array_key_exists($idArduino,$this->getArduinos())){
+    if (!array_key_exists($idArduino,$lesArduinos)){
         throw new DomotiqueException("L'arduino [".$idArduino."] n'existe pas",103);
       }
     return $this->dao->sendCommandesJson($idArduino, $commandes);
   }
 
 }
-
-?>
