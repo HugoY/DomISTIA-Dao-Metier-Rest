@@ -10,9 +10,6 @@ La couche métier du serveur est exposée aux clients via un service REST (REpre
 
 Installation
 --------
-
-* Pthread activé dans PHP
-  * http://www.php.net/manual/fr/book.pthreads.php
 * rewrite engine
 
 
