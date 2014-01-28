@@ -46,7 +46,8 @@ class Dao implements IDao {
     return $this->lesArduinos;
   }
 
-  public function removeArduino($ipArduino) {
+  public function removeArduino($idArduino) {
+    $this->log->logInfo("removeArduino");
     $address = getHostByName(getHostName());
     $port = 100;    
     //Creation de la socket
@@ -54,16 +55,16 @@ class Dao implements IDao {
     //Connexion au serveur
     $this->socketConnectToArduino($sock, $address, $port);
     //Ecriture du paquet vers le serveur d'enregistrement
-    $mapJSON = json_encode(array("from" => "dao", "action" => "removeArduino", "ip"=>$ipArduino));
+    $mapJSON = json_encode(array("from" => "dao", "action" => "removeArduino", "id"=>$idArduino));
     $mapJSON .= "\n";
     if (!socket_write($sock, $mapJSON, 2048)) {
       $errorcode = socket_last_error();
       $errormsg = socket_strerror($errorcode);
       throw new DomotiqueException("Could not write: $errormsg \n",$errorcode);
     }
-    $this->log->logInfo("Message write successfully");
+    $this->log->logInfo("removeArduino:Message write successfully");
     // Attendre une réponse 
-    //$answer = $this->socketReadAnswerFromArduino($sock);
+    $answer = $this->socketReadAnswerFromArduino($sock);
     //Fermeture de la connexion
     socket_close($sock);
 
@@ -80,12 +81,12 @@ class Dao implements IDao {
     return $sock;
   }
 
-  protected function socketConnectToArduino($sock, $arduinoIp, $arduinoPort) {
+  protected function socketConnectToArduino($sock, $arduinoIp, $arduinoPort, $idArduino=NULL) {
     if (!socket_connect($sock, $arduinoIp, $arduinoPort)) {
       $errorcode = socket_last_error();
       $errormsg = socket_strerror($errorcode);
       // enlever du tableau 
-      removeArduino($arduinoIp);
+      $this->removeArduino($idArduino);
       throw new DomotiqueException("Could not connect: $errormsg" ,$errorcode);
     }
     $this->log->logInfo("Connection established");
@@ -108,7 +109,7 @@ class Dao implements IDao {
     //Creation de la socket
     $sock = $this->socketCreate();
     //Connexion au serveur
-    $this->socketConnectToArduino($sock, $arduino->getIp(), $arduino->getPort());
+    $this->socketConnectToArduino($sock, $arduino->getIp(), $arduino->getPort(),$idArduino);
     //Ecriture du paquet vers le serveur
     if (!socket_write($sock, $commande->toJSON(), 2048)) {
       $errorcode = socket_last_error();
