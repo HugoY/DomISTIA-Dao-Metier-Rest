@@ -29,7 +29,7 @@ class Dao implements IDao {
     if (!socket_write($sock, $mapJSON, 2048)) {
       $errorcode = socket_last_error();
       $errormsg = socket_strerror($errorcode);
-      throw new DomotiqueException("Could not write: $errormsg \n",$errorcode);
+      throw new DomotiqueException("Could not write: $errormsg ",$errorcode);
     }
     $this->log->logInfo("Message write successfully");
     // Attendre une réponse 
@@ -60,7 +60,7 @@ class Dao implements IDao {
     if (!socket_write($sock, $mapJSON, 2048)) {
       $errorcode = socket_last_error();
       $errormsg = socket_strerror($errorcode);
-      throw new DomotiqueException("Could not write: $errormsg \n",$errorcode);
+      throw new DomotiqueException("Could not write: $errormsg ",$errorcode);
     }
     $this->log->logInfo("removeArduino:Message write successfully");
     // Attendre une réponse 
@@ -75,7 +75,7 @@ class Dao implements IDao {
     if (!$sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP)) {
       $errorcode = socket_last_error();
       $errormsg = socket_strerror($errorcode);
-      throw new DomotiqueException("Impossible de créer socket: $errormsg \n",$errorcode);
+      throw new DomotiqueException("Impossible de créer socket: $errormsg ",$errorcode);
     }
     $this->log->logInfo("Socket created \n");
     return $sock;
@@ -96,7 +96,7 @@ class Dao implements IDao {
     if (!$buf = socket_read($sock, 2048, PHP_NORMAL_READ)) {
       $errorcode = socket_last_error();
       $errormsg = socket_strerror($errorcode);
-      throw new DomotiqueException("Could not read: $errormsg \n",$errorcode);
+      throw new DomotiqueException("Could not read: $errormsg ",$errorcode);
     }
     $this->log->logInfo("La réponse : " . $buf);
     return $buf;
@@ -114,7 +114,7 @@ class Dao implements IDao {
     if (!socket_write($sock, $commande->toJSON(), 2048)) {
       $errorcode = socket_last_error();
       $errormsg = socket_strerror($errorcode);
-      throw new DomotiqueException("Could not write: $errormsg \n",$errorcode);
+      throw new DomotiqueException("Could not write: $errormsg ",$errorcode);
     }
     $this->log->logInfo("Message write successfully \n");
     // Attendre une réponse 
@@ -138,7 +138,7 @@ class Dao implements IDao {
       $errorcode = socket_last_error();
       $errormsg = socket_strerror($errorcode);
 
-      throw new DomotiqueException("Could not write: $errormsg \n",$errorcode);
+      throw new DomotiqueException("Could not write: $errormsg ",$errorcode);
     }
     $this->log->logInfo("Message write successfully");
     // Attendre une réponse 

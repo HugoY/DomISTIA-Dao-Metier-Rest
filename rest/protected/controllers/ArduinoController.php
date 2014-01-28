@@ -28,10 +28,6 @@ class ArduinoController extends CController {
   }
 
   public function actionBlink() {
-
-    while (count($this->metier->getArduinos()) == 0) {
-      sleep(1);
-    }
     try {
       $this->metier->faireClignoterLed($_GET['idCommand'], $_GET['ip'], $_GET['pin'], $_GET['duree'], $_GET['nbIter']);
       $reponse = array("id" => $_GET['idCommand'],
