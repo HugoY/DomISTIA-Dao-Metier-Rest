@@ -26,9 +26,11 @@ class Reponse {
     public function initWithJSON($json) {
         $this->json=$json;
         $map = json_decode($json);
+
         $this->setId($map->{'id'});
         $this->setErreur($map->{'er'});
         $this->setEtat($map->{'et'});
+     
     }
 
     public function getJson() {
