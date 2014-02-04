@@ -33,7 +33,7 @@ class ArduinoController extends CController {
             $this->metier->faireClignoterLed($_GET['idCommand'], $_GET['ip'], $_GET['pin'], $_GET['duree'], $_GET['nbIter']);
             $reponse = array("id" => $_GET['idCommand'],
                 "erreur" => "0",
-                "etat" => "{}",
+                "etat" => new stdClass(),
                 "json" => NULL
             );
             $reponseArray = array("data" => $reponse);
