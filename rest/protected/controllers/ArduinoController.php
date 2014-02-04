@@ -97,7 +97,11 @@ class ArduinoController extends CController {
         }       
         try {
             $reponse = $this->metier->sendCommandesJson($_GET['ip'], $lescommandes);
-            $reponseArray = array("data" => $reponse);
+            $reponse2=array();
+            foreach ($reponse as $a) {
+              $reponse2[] = json_decode($a);
+            }
+            $reponseArray = array("data" => $reponse2);
         } catch (Exception $e) {
             $reponseArray = array("message" => $e->getMessage(),
                 "erreur" => $e->getCode()
