@@ -131,7 +131,6 @@ class Metier implements IMetier {
     //on ajoute dans un tableau
 
     $reponses = $this->sendCommandes($idArduino, array($commande));
-
     return $reponses[0];
   }
 

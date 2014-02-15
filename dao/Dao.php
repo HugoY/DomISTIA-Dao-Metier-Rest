@@ -18,7 +18,7 @@ class Dao implements IDao {
   }
 
   public function getArduinos() {
-    $address = getHostByName(getHostName());
+    $address = "192.168.2.1";//getHostByName(getHostName());
     $port = 100;
     $sock = $this->socketCreate();
     $this->socketConnectTo($sock, $address, $port);

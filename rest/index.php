@@ -1,10 +1,11 @@
 <?php
-$target = 'C:\Program Files (x86)\EasyPHP-DevServer-13.1VC9\data\localweb\DomISTIA-Dao-Metier-Rest\rest';
-$link = 'C:\Program Files (x86)\EasyPHP-DevServer-13.1VC9\data\localweb\server-restServer';
+//$target = 'C:\Program Files (x86)\EasyPHP-DevServer-13.1VC11\data\localweb\DomISTIA-Dao-Metier-Rest\rest';
 
-if(!file_exists($link)){
+//$link = 'C:\Program Files (x86)\EasyPHP-DevServer-13.1VC11\data\localweb\server-restServer';
+
+/*if(!file_exists($link)){
   symlink($target, $link);
-}
+}*/
 
 // include Yii bootstrap file
 defined('YII_DEBUG') or define('YII_DEBUG', true);
