@@ -30,7 +30,7 @@ Installation
     * Dans netbeans configurer correctement la copie des fichiers dans le répertoire web de votre serveur web
     * Il faut auparavant configurer l'adresse IP du serveur d'enregistrement dans le fichier dao/Dao.php, variable $address (ligne 21) de la méthode getArduinos.
 
-Auteur
+Auteurs
 --------
 * Julien Birot
 * Hugo Charles
