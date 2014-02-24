@@ -17,10 +17,18 @@ Autres repositories du projet
 
 Installation
 --------
-* Flasher les cartes arduinos en personnalisant leur ip et description.  
+* Flasher les cartes arduinos en personnalisant : 
+    * L'adresse IP du serveur d'enregistrement
+    * L'adresse IP de la carte arduino
+    * L'identifiant de la carte arduino
+    * La description de la carte arduino (facultatif)
 * Avec Netbeans charger le serveur d'enregistrement et le serveur Web
-    * Lancer le serveur d'enregistrement en ligne de commande PHP, les deux paramètres facultatifs sont l'adresse ip du serveur et son port. 
-Lancer 
+* Lancer le serveur d'enregistrement en ligne de commande PHP
+    * Facultatif : On peut passer en paramètre une adresse IP et un port  
+    * Ce n'est utile que si l'adresse IP par défaut n'est pas celle voulu (ex : plusieurs cartes réseaux)
+* Lancer le serveur web
+    * Dans netbeans configurer correctement la copie des fichiers dans le répertoire web de votre serveur web
+    * Il faut auparavant configurer l'adresse IP du serveur d'enregistrement dans le fichier dao/Dao.php, variable $address (ligne 21) de la méthode getArduinos.
 
 Auteur
 --------
